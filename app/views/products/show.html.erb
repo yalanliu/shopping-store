@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>商品名:</strong>
+  <%= @product.name %>
+</p>
+
+<p>
+  <strong>描述:</strong>
+  <%= @product.description %>
+</p>
+
+<p>
+  <strong>商品貨號:</strong>
+  <%= @product.sku %>
+</p>
+
+<p>
+  <strong>原價:</strong>
+  <%= @product.list_price %>
+</p>
+
+<p>
+  <strong>售價:</strong>
+  <%= @product.sell_price %>
+</p>
+
+<p>
+  <strong>庫存:</strong>
+  <%= @product.stock %>
+</p>
+
+<p>
+  <strong>狀態:</strong>
+  <%= @product.status %>
+</p>
+
+<%= link_to '編輯商品', edit_product_path(@product) %> |
+<%= link_to '返回商品列表', products_path %>

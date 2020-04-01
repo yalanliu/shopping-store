@@ -1,0 +1,52 @@
+<%= form_with(model: product, local: true) do |form| %>
+  <% if product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+        <% product.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name, '商品名' %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description, '商品描述' %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sku, '商品貨號' %>
+    <%= form.text_field :sku %>
+  </div>
+
+  <div class="field">
+    <%= form.label :list_price, '原價' %>
+    <%= form.number_field :list_price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sell_price, '售價' %>
+    <%= form.number_field :sell_price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :stock, '庫存數量' %>
+    <%= form.number_field :stock %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status, '商品狀態' %>
+    <%= form.select(:status, [['上架', 'on_sale'],['下架', 'discontinue'],['補貨中', 'replenish']], {}) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit '送出' %>
+  </div>
+<% end %>
