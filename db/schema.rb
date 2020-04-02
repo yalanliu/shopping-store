@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_124806) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.string "description"
+    t.text "description"
     t.string "sku"
     t.integer "list_price"
     t.integer "sell_price"
