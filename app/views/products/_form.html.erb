@@ -10,6 +10,16 @@
       </ul>
     </div>
   <% end %>
+  
+  <div class="field">
+    <%= form.label :images, '商品圖片' %>
+    <%= form.file_field :images, multiple: true %>
+    <div>
+      <% @product.images.each do |image| %>
+        <%= preview_images @product, image %>
+      <% end %>
+    </div>
+  </div>
 
   <div class="field">
     <%= form.label :name, '商品名' %>

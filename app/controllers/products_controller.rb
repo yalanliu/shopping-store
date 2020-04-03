@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-
+    
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: '商品已新增成功!' }
@@ -30,6 +30,7 @@ class ProductsController < ApplicationController
   end
 
   def update
+    # @product.images.attach(params[:images]) if @product.images.attached?
     respond_to do |format|
       if @product.update(product_params)
         format.html { redirect_to @product, notice: '商品已修改成功!' }
@@ -55,6 +56,6 @@ class ProductsController < ApplicationController
     end
 
     def product_params
-      params.require(:product).permit(:name, :description, :sku, :list_price, :sell_price, :stock, :status)
+      params.require(:product).permit(:name, :description, :sku, :list_price, :sell_price, :stock, :status, images: [])
     end
 end
