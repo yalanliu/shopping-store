@@ -1,9 +1,22 @@
 module ProductsHelper
-  def preview_images(product, image)
-    if product.images.attached?
-      image_tag image.variant(resize_to_limit: [100, 100])
+  def cover_images(product, image, dummy_image: false)
+    if dummy_image
+      if product.images.attached?
+        generate_cover_image(product, image)
+      else
+        image_tag fake_image(width, height)
+      end
     else
-      image_tag image.preview(resize_to_limit: [100, 100])
+      generate_cover_image(product, image) if product.images.attached?
     end
+  end
+
+  private
+  def fake_image(width, height)
+    "https://fakeimg.pl/100x100"
+  end
+
+  def generate_cover_image(product, image)
+    image_tag image.variant(resize_to_limit: [100, 100]) if product.images.attached?
   end
 end

@@ -18,7 +18,7 @@
   <tbody>
     <% @products.each do |product| %>
       <tr>
-        <td><%= image_tag product.images.first.variant(resize_to_limit: [50, 50]) %></td>
+        <td><%= image_tag product.images.first.variant(resize_to_limit: [50, 50]) if product.images.attached? %></td>
         <td><%= product.name %></td>
         <td><%= product.list_price %></td>
         <td><%= product.sell_price %></td>

@@ -16,7 +16,7 @@
     <%= form.file_field :images, multiple: true %>
     <div>
       <% @product.images.each do |image| %>
-        <%= preview_images @product, image %>
+        <%= cover_images @product, image  %>
       <% end %>
     </div>
   </div>
