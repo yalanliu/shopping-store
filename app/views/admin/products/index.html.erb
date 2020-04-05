@@ -9,6 +9,8 @@
       <th>商品名稱</th>
       <th>原價</th>
       <th>售價</th>
+      <th>庫存</th>
+      <th>狀態</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,10 +22,16 @@
         <td><%= product.name %></td>
         <td><%= product.list_price %></td>
         <td><%= product.sell_price %></td>
-        <td><%#= link_to '加入購物車', '#', class: 'bnt' %></td>
+        <td><%= product.stock %></td>
+        <td><%= product.status %></td>
+        <td><%= link_to '預覽', product %></td>
+        <td><%= link_to '編輯', edit_admin_product_path(product) %></td>
+        <td><%= link_to '刪除', product, method: :delete, data: { confirm: '確認刪除?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
+
+<%= link_to '新增商品', new_admin_product_path %>
