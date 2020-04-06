@@ -4,3 +4,29 @@
   background-color: #F8F9FA;
   font-weight: 500;
 }
+
+a:hover {
+  background-color: transparent;
+  text-decoration: none;
+}
+
+td.td-image {
+  width: 120px;
+  height: 120px;
+  padding-left: 0;
+}
+
+.td-description {
+  width: 60%;
+}
+
+.show-image {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+}
+
+.cover-image {
+  width: 50%;
+  height: 50%;
+}

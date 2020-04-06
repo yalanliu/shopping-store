@@ -1,12 +1,10 @@
 class Admin::ProductsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:edit, :update, :destroy]
 
   def index
     @products = Product.all
-  end
-
-  def show
+    @products = Product.order(params[:order_by]) if params[:order_by]
   end
 
   def new
@@ -14,6 +12,7 @@ class Admin::ProductsController < ApplicationController
   end
 
   def edit
+    @product.images.attachments.find(params[:image_id]).delete if params[:image_id]
   end
 
   def create
@@ -27,7 +26,7 @@ class Admin::ProductsController < ApplicationController
 
   def update
     if @product.update(product_params)
-      redirect_to admin_product_path, notice: '商品已修改成功!'
+      redirect_to admin_products_path, notice: '商品已修改成功!'
     else
       render :edit
     end
@@ -44,6 +43,14 @@ class Admin::ProductsController < ApplicationController
     end
 
     def product_params
-      params.require(:product).permit(:name, :description, :sku, :list_price, :sell_price, :stock, :status, images: [])
+      params.require(:product).permit(:name,
+                                      :description,
+                                      :sku,
+                                      :list_price, 
+                                      :sell_price, 
+                                      :stock, 
+                                      :status,
+                                      :user_id, 
+                                      images: [])
     end
 end

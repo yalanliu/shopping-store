@@ -1,62 +1,72 @@
-<%= form_with(model: product, local: true) do |form| %>
-  <% if product.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+ <% if product.errors.any? %>
+   <div id="error_explanation">
+     <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
 
-      <ul>
-        <% product.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  
-  <div class="field">
+     <ul>
+       <% product.errors.full_messages.each do |message| %>
+         <li><%= message %></li>
+       <% end %>
+     </ul>
+   </div>
+<% end %>
+<%#  %>
+
+<%#  %>
+<%= form_for [:admin, product] do |form| %>
+  <div class="form-group">
     <%= form.label :images, '商品圖片' %>
     <%= form.file_field :images, multiple: true %>
     <div>
-      <% @product.images.each do |image| %>
-          <%= cover_images(@product, image) %>
+      <% product.images.each do |image| %>
+        <%= image_tag image.variant(resize_to_limit: [100, 100]) %>
+        <%= link_to '刪除照片', image_id: image.id %>
       <% end %>
     </div>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :name, '商品名' %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :description, '商品描述' %>
-    <%= form.text_area :description %>
+    <%= form.text_area :description, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :sku, '商品貨號' %>
-    <%= form.text_field :sku %>
+    <%= form.text_field :sku, class: 'form-control', placeholder: '格式: AEC001(大寫英文三碼 + 數字三碼)' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :list_price, '原價' %>
-    <%= form.number_field :list_price %>
+    <%= form.number_field :list_price, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :sell_price, '售價' %>
-    <%= form.number_field :sell_price %>
+    <%= form.number_field :sell_price, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :stock, '庫存數量' %>
-    <%= form.number_field :stock %>
+    <%= form.number_field :stock, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :status, '商品狀態' %>
-    <%= form.select(:status, [['上架', 'on_sale'],['下架', 'discontinue'],['補貨中', 'replenish']], {}) %>
+    <%= form.select(:status,
+                    [['上架', 'on_sell'],
+                     ['下架', 'discontinue'],
+                     ['補貨中', 'replenish']],
+                    {},
+                    class: 'form-control') %>
   </div>
+  
+  <%= form.hidden_field :user_id, value: current_user.id %>
 
   <div class="actions">
-    <%= form.submit '送出' %>
+    <%= form.submit '送出', class: 'btn btn-info' %>
   </div>
 <% end %>

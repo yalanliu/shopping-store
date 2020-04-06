@@ -1,37 +1,50 @@
-<p id="notice"><%= notice %></p>
-
-<span>商品列表</span>
-
-<table>
-  <thead>
-    <tr>
-      <th>商品圖片</th>
-      <th>商品名稱</th>
-      <th>原價</th>
-      <th>售價</th>
-      <th>庫存</th>
-      <th>狀態</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @products.each do |product| %>
-      <tr>
-        <td><%= cover_images(product, choice_first_pic: true, dummy_image: true) %></td>
-        <td><%= product.name %></td>
-        <td><%= product.list_price %></td>
-        <td><%= product.sell_price %></td>
-        <td><%= product.stock %></td>
-        <td><%= product.status %></td>
-        <td><%= link_to '預覽', product %></td>
-        <td><%= link_to '編輯', edit_admin_product_path(product) %></td>
-        <td><%= link_to '刪除', product, method: :delete, data: { confirm: '確認刪除?' } %></td>
-      </tr>
+<div class="d-flex flex-column">
+  <div class="mb-2">
+    <span class='font-weight-bold'>商品列表</span>
+    <%= form_with url: admin_root_path, method:'get', local:true, class: 'form-inline d-inline ml-2' do |form| %>
+      <%= form.select(:order_by,
+                      [['上架時間-由新到舊', 'id DESC'],
+                        ['上架時間-由舊到新', 'id ASC'],
+                        ['定價-由高到低', 'sell_price DESC'],
+                        ['定價-由低到高', 'sell_price ASC'],
+                        ['庫存-由多到少', 'stock DESC'],
+                        ['庫存-由少到多', 'stock ASC']],
+                      {},
+                      class: 'form-control-sm form-control sort-by-select') %>
+      <%= form.submit '排序', class:'btn btn-sm btn-light sort-by-submit d-none' %>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to '新增商品', new_admin_product_path %>
+    <%= link_to '新增商品', new_admin_product_path, class: 'text-light btn-sm btn-info ml-2' %>
+  </div>
+  
+  <table class="table-hover pl-0">
+    <thead class="text-secondary table-info">
+      <tr>
+        <th>商品圖片</th>
+        <th>商品名稱</th>
+        <th>定價 / 特價</th>
+        <th>庫存</th> 
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td class="td-image">
+            <%= cover_images(product, choice_first_pic: true, dummy_image: true) %>
+          </td>
+          <td class="td-description-admin">
+            <strong class="text-secondary"><%= truncate product.name, length: 5 %></strong><br>
+          </td>
+          <td>
+            NT$<%= product.list_price %> / 
+            <span class="text-danger">NT$<%= product.sell_price if product.sell_price %></span>
+          </td>
+          <td><%= product.stock %></td>
+          <td><%= link_to '預覽', product %></td>
+          <td><%= link_to '編輯', edit_admin_product_path(product) %></td>
+          <td><%= link_to '刪除', admin_product_path(product), method: :delete, data: { confirm: '確認刪除?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

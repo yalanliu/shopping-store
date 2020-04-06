@@ -1,29 +1,44 @@
-<p id="notice"><%= notice %></p>
-
-<span>商品列表</span>
-
-<table>
-  <thead>
-    <tr>
-      <th>商品圖片</th>
-      <th>商品名稱</th>
-      <th>原價</th>
-      <th>售價</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @products.each do |product| %>
-      <tr>
-        <td><%= cover_images(product, choice_first_pic: true, dummy_image: true) %></td>
-        <td><%= product.name %></td>
-        <td><%= product.list_price %></td>
-        <td><%= product.sell_price %></td>
-        <td><%#= link_to '加入購物車', '#', class: 'bnt' %></td>
-      </tr>
+<div class="d-flex flex-column">
+  <div class="mb-2">
+    <span class='font-weight-bold'>商品列表</span>
+    
+    <%= form_with url: root_path, method:'get', local:true, class: 'form-inline d-inline ml-2' do |form| %>
+      <%= form.select(:order_by,
+                      [['上架時間-由新到舊', 'id DESC'],
+                        ['上架時間-由舊到新', 'id ASC'],
+                        ['定價-由高到低', 'sell_price DESC'],
+                        ['定價-由低到高', 'sell_price ASC']],
+                      {},
+                      class: 'form-control-sm form-control sort-by-select') %>
+      <%= form.submit '排序', class:'btn btn-sm btn-light sort-by-submit d-none' %>
     <% end %>
-  </tbody>
-</table>
-
-<br>
+  </div>
+  
+  <table class="table-hover pl-0">
+    <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td class="td-image">
+            <%= link_to product do %>
+              <%= cover_images(product, choice_first_pic: true, dummy_image: true) %>
+            <% end %>
+          </td>
+          <td class="td-description">
+            <%= link_to product, class: 'link' do %>
+              <strong class="text-info"><%= truncate product.name, length: 10 %></strong><br>
+            <% end %>
+            <span class="text-secondary"><%= truncate product.description, length: 20 %></span>
+          </td>
+          <td>
+            <% if product.list_price == product.sell_price %>
+              <strong class="text-dark">售價 NT$<%= product.list_price %></strong>
+            <% else %>
+              <del class="text-secondary">定價 NT$<%= product.list_price %></del><br>
+              <strong class="text-danger">特價 NT$<%= product.sell_price %></strong>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
