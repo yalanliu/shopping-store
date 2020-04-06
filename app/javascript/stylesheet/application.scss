@@ -30,3 +30,12 @@ td.td-image {
   width: 50%;
   height: 50%;
 }
+
+.error-message-text {
+  color: rgba(247, 62, 62, .9);
+}
+
+.field_with_errors {
+  background-color: rgba(247, 62, 62, .5);
+  display: block;
+}

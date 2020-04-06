@@ -1,24 +1,12 @@
-# README
+# 購物網站
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+功能:
 
-Things you may want to cover:
+* 前台可顯示商品的圖片和價格等基本資訊，並具排序功能
 
-* Ruby version
+* 管理者可登入後，進入後台管理商品(含新增/修改/刪除)，亦可排序商品
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* 商品資料特性
+  - 貨號
+  - 可放多張圖片
+  - 進貨狀態

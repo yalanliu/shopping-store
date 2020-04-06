@@ -1,17 +1,12 @@
  <% if product.errors.any? %>
-   <div id="error_explanation">
-     <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
-
-     <ul>
-       <% product.errors.full_messages.each do |message| %>
-         <li><%= message %></li>
-       <% end %>
-     </ul>
+   <div class="alert alert-secondary mt-2 mb-2">
+     <span class="font-weight-bold"><%= pluralize(product.errors.count, "項") %>欄位請再次查看</span><br>
+     <% product.errors.full_messages.each do |message| %>
+      <span class="error-message-text"><%= message %></span><br>
+     <% end %>
    </div>
 <% end %>
-<%#  %>
 
-<%#  %>
 <%= form_for [:admin, product] do |form| %>
   <div class="form-group">
     <%= form.label :images, '商品圖片' %>
