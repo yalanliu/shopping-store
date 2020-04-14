@@ -1,6 +1,9 @@
-<p id="notice"><%= notice %></p>
+<% if user_signed_in? %>
+  <%= link_to '編輯', edit_admin_product_path(@product), class: 'btn-sm btn-success text-light' %>
+  <%= link_to '刪除', admin_product_path(@product), method: :delete, data: { confirm: '確認刪除?' }, class: 'btn-sm btn-danger text-white' %>
+<% end %>
 
-<div class="d-flex pb-3">
+<div class="d-flex pb-3 pt-3">
   <div class="show-image d-flex flex-wrap">
     <% @product.images.each do |image| %>
       <%#= link_to rails_blob_path(image, disposition: "attachment") do %>

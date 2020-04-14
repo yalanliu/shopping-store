@@ -3,8 +3,13 @@ class Admin::ProductsController < ApplicationController
   before_action :set_product, only: [:edit, :update, :destroy]
 
   def index
-    @products = Product.all
-    @products = Product.order(params[:order_by]) if params[:order_by]
+    @products = Product.available
+    
+    if params[:order_by] == 'discontinue products'
+      @products = Product.where(status: 1).order(id: :desc)
+    elsif params[:order_by]
+      @products = Product.where.not(status: 1).order(params[:order_by])
+    end
   end
 
   def new

@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
 
   def index
     @products = Product.available
-    @products = Product.order(params[:order_by]) if params[:order_by]
+    @products = Product.where.not(status: 1).order(params[:order_by]) if params[:order_by]
   end
 
   def show

@@ -4,7 +4,8 @@ class Product < ApplicationRecord
   validates :name, presence: true
   validates :list_price, :sell_price, :stock, numericality: { greater_than: 0 }
   validates :sell_price, numericality: { less_than_or_equal_to: :list_price }
-  validates :sku, presence: true, uniqueness: true
+  validates :sku, presence: true, uniqueness: true, format: { with: /\p{Upper}{3}\d{3}/,
+  message: "格式應為-大寫英文三碼 + 數字三碼(例如: AEC001)" }
   # relationship
   has_many_attached :images
   belongs_to :user
